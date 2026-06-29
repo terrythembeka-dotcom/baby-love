@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Come Back to Daddy?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #ffc0cb, #ffb6d9, #ff69b4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .question {
+            font-size: 3em;
+            color: #fff;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 100px;
+        }
+
+        .yes-btn {
+            padding: 20px 50px;
+            font-size: 1.5em;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            z-index: 20;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .yes-btn:active {
+            transform: scale(0.95);
+        }
+
+        .no-btn {
+            padding: 20px 50px;
+            font-size: 1.5em;
+            background: linear-gradient(135deg, #f44336, #da190b);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: not-allowed;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            transition: all 0.1s;
+            user-select: none;
+            pointer-events: auto;
+        }
+
+        .no-btn:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes popAnimation {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2) rotate(10deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: popAnimation 0.8s ease-out;
+            max-width: 500px;
+        }
+
+        .bunny-bear {
+            font-size: 8em;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .popup-text {
+            font-size: 2em;
+            color: #ff1493;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .calendar-btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        .calendar-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .countdown {
+            font-size: 1.2em;
+            color: #555;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .question {
+                font-size: 2em;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .no-btn {
+                position: relative;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="question">Will you come back to daddy? 💕</div>
+        <div class="buttons-container">
+            <button class="yes-btn" onclick="handleYes()">Yes! 💚</button>
+            <button class="no-btn" id="noBtn">I still need time baby 💔</button>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content">
+            <div class="bunny-bear">🐰🌹</div>
+            <div class="popup-text">Thank you ❤️ Nkosazana!</div>
+            <button class="calendar-btn" onclick="redirectToCalendar()">Proceed to Calendar 📅</button>
+            <div class="countdown">Redirecting in <span id="countdown">10</span> seconds...</div>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const popupOverlay = document.getElementById('popupOverlay');
+
+        function getRandomPosition() {
+            const maxX = window.innerWidth - noBtn.offsetWidth;
+            const maxY = window.innerHeight - noBtn.offsetHeight;
+            
+            let x = Math.random() * maxX;
+            let y = Math.random() * maxY;
+            
+            // Avoid spawning behind buttons area
+            if (y > window.innerHeight * 0.4 && y < window.innerHeight * 0.7 && x > window.innerWidth * 0.3 && x < window.innerWidth * 0.7) {
+                y = window.innerHeight * 0.8;
+            }
+            
+            return { x, y };
+        }
+
+        function moveNoButton() {
+            const pos = getRandomPosition();
+            noBtn.style.left = pos.x + 'px';
+            noBtn.style.top = pos.y + 'px';
+        }
+
+        noBtn.addEventListener('mouseenter', moveNoButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        // Aggressively move the button if cursor gets close
+        document.addEventListener('mousemove', (e) => {
+            const rect = noBtn.getBoundingClientRect();
+            const distance = Math.sqrt(
+                Math.pow(e.clientX - (rect.left + rect.width / 2), 2) +
+                Math.pow(e.clientY - (rect.top + rect.height / 2), 2)
+            );
+
+            if (distance < 150) {
+                moveNoButton();
+            }
+        });
+
+        function handleYes() {
+            popupOverlay.style.display = 'flex';
+            startCountdown();
+        }
+
+        function startCountdown() {
+            let seconds = 10;
+            const countdownEl = document.getElementById('countdown');
+            
+            const interval = setInterval(() => {
+                seconds--;
+                countdownEl.textContent = seconds;
+                
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    redirectToCalendar();
+                }
+            }, 1000);
+        }
+
+        function redirectToCalendar() {
+            window.location.href = 'calendar.html';
+        }
+
+        // Initial random position for no button
+        window.addEventListener('load', moveNoButton);
+    </script>
+</body>
+</html>

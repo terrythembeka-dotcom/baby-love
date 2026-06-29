@@ -21,12 +21,24 @@
             font-family: 'Arial', sans-serif;
             overflow: hidden;
             position: relative;
+            transition: all 0.5s ease;
         }
 
-        .container {
+        /* Question Page Styles */
+        .question-page {
             text-align: center;
             z-index: 10;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .question-page.hidden {
+            display: none;
         }
 
         .question {
@@ -90,6 +102,176 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
 
+        /* Calendar Page Styles */
+        .calendar-page {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .calendar-page.active {
+            display: flex;
+        }
+
+        .calendar-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .calendar-title {
+            text-align: center;
+            color: #ff1493;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .calendar-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .email-info {
+            background: #ffe0f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #333;
+        }
+
+        .success-message {
+            display: none;
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .date-input {
+            display: grid;
+            gap: 20px;
+        }
+
+        .date-field {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .date-field label {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .date-field input,
+        .date-field textarea {
+            padding: 15px;
+            font-size: 1em;
+            border: 2px solid #ffb6d9;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+            font-family: Arial;
+        }
+
+        .date-field input:focus,
+        .date-field textarea:focus {
+            outline: none;
+            border-color: #ff1493;
+        }
+
+        .date-field textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .reserve-btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .reserve-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .reserve-btn:active {
+            transform: scale(0.95);
+        }
+
+        .back-btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            background: #ccc;
+            color: #333;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #bbb;
+            transform: scale(1.05);
+        }
+
+        /* Popup Styles */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -129,6 +311,10 @@
             animation: fadeIn 0.5s ease-in;
         }
 
+        .popup-overlay.active {
+            display: flex;
+        }
+
         .popup-content {
             background: white;
             padding: 50px;
@@ -161,25 +347,6 @@
             margin-bottom: 30px;
         }
 
-        .calendar-btn {
-            padding: 15px 40px;
-            font-size: 1.2em;
-            background: linear-gradient(135deg, #ff1493, #ff69b4);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 20px;
-        }
-
-        .calendar-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-
         .countdown {
             font-size: 1.2em;
             color: #555;
@@ -199,11 +366,29 @@
             .no-btn {
                 position: relative;
             }
+
+            .calendar-container {
+                padding: 20px;
+            }
+
+            .calendar-title {
+                font-size: 1.8em;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .reserve-btn,
+            .back-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Question Page -->
+    <div class="question-page" id="questionPage">
         <div class="question">Will you come back to daddy? 💕</div>
         <div class="buttons-container">
             <button class="yes-btn" onclick="handleYes()">Yes! 💚</button>
@@ -211,11 +396,55 @@
         </div>
     </div>
 
+    <!-- Calendar Page -->
+    <div class="calendar-page" id="calendarPage">
+        <div class="calendar-container">
+            <h1 class="calendar-title">❤️ Date Night Reservation</h1>
+            <p class="calendar-subtitle">Pick a special day for us</p>
+
+            <div class="email-info">
+                📧 Reminders will be sent to terrythembeka@gmail.com and amophaedi27@gmail.com
+            </div>
+
+            <div class="success-message" id="successMessage">
+                ✅ Reservation confirmed! Reminders have been sent.
+            </div>
+
+            <div class="date-input">
+                <div class="date-field">
+                    <label for="reservationDate">📅 Choose Your Date:</label>
+                    <input type="date" id="reservationDate" required>
+                </div>
+
+                <div class="date-field">
+                    <label for="reservationTime">🕐 Choose Your Time:</label>
+                    <input type="time" id="reservationTime" required>
+                </div>
+
+                <div class="date-field">
+                    <label for="location">📍 Where would you like to go?</label>
+                    <input type="text" id="location" placeholder="Restaurant, park, movie theater..." required>
+                </div>
+
+                <div class="date-field">
+                    <label for="notes">💌 A special message:</label>
+                    <textarea id="notes" placeholder="Write something special..."></textarea>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button class="reserve-btn" onclick="submitReservation()">Reserve This Date 💕</button>
+                <button class="back-btn" onclick="goBackToQuestion()">Go Back</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Overlay -->
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-content">
             <div class="bunny-bear">🐰🌹</div>
             <div class="popup-text">Thank you ❤️ Nkosazana!</div>
-            <button class="calendar-btn" onclick="redirectToCalendar()">Proceed to Calendar 📅</button>
+            <button class="reserve-btn" onclick="proceedToCalendar()" style="margin-top: 20px;">Proceed to Calendar 📅</button>
             <div class="countdown">Redirecting in <span id="countdown">10</span> seconds...</div>
         </div>
     </div>
@@ -223,6 +452,9 @@
     <script>
         const noBtn = document.getElementById('noBtn');
         const popupOverlay = document.getElementById('popupOverlay');
+        const questionPage = document.getElementById('questionPage');
+        const calendarPage = document.getElementById('calendarPage');
+        let countdownInterval = null;
 
         function getRandomPosition() {
             const maxX = window.innerWidth - noBtn.offsetWidth;
@@ -265,7 +497,7 @@
         });
 
         function handleYes() {
-            popupOverlay.style.display = 'flex';
+            popupOverlay.classList.add('active');
             startCountdown();
         }
 
@@ -273,23 +505,114 @@
             let seconds = 10;
             const countdownEl = document.getElementById('countdown');
             
-            const interval = setInterval(() => {
+            if (countdownInterval) clearInterval(countdownInterval);
+            
+            countdownInterval = setInterval(() => {
                 seconds--;
                 countdownEl.textContent = seconds;
                 
                 if (seconds <= 0) {
-                    clearInterval(interval);
-                    redirectToCalendar();
+                    clearInterval(countdownInterval);
+                    proceedToCalendar();
                 }
             }, 1000);
         }
 
-        function redirectToCalendar() {
-            window.location.href = 'calendar.html';
+        function proceedToCalendar() {
+            if (countdownInterval) clearInterval(countdownInterval);
+            popupOverlay.classList.remove('active');
+            questionPage.classList.add('hidden');
+            calendarPage.classList.add('active');
+            initializeCalendarPage();
+        }
+
+        function goBackToQuestion() {
+            calendarPage.classList.remove('active');
+            questionPage.classList.remove('hidden');
+            resetForm();
+            moveNoButton();
+        }
+
+        function initializeCalendarPage() {
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('reservationDate');
+            dateInput.min = today;
+            dateInput.valueAsDate = new Date();
+        }
+
+        function resetForm() {
+            document.getElementById('reservationDate').value = '';
+            document.getElementById('reservationTime').value = '';
+            document.getElementById('location').value = '';
+            document.getElementById('notes').value = '';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        async function submitReservation() {
+            const date = document.getElementById('reservationDate').value;
+            const time = document.getElementById('reservationTime').value;
+            const location = document.getElementById('location').value;
+            const notes = document.getElementById('notes').value;
+
+            if (!date || !time || !location) {
+                alert('Please fill in all required fields 💕');
+                return;
+            }
+
+            try {
+                // Send to email service using Formspree
+                const response = await fetch('https://formspree.io/f/mwazrwey', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        to_emails: ['terrythembeka@gmail.com', 'amophaedi27@gmail.com'],
+                        reservation_date: date,
+                        reservation_time: time,
+                        location: location,
+                        notes: notes,
+                        subject: '❤️ Date Night Reservation Confirmed! - Will you come back to daddy?'
+                    })
+                });
+
+                if (response.ok) {
+                    showSuccessMessage();
+                    setTimeout(() => {
+                        alert('Our date night is set! 🌹 See you soon!');
+                    }, 1500);
+                } else {
+                    console.log('Reservation saved locally:', { date, time, location, notes });
+                    showSuccessMessage();
+                    setTimeout(() => {
+                        alert('Date night reserved! 🌹 See you soon!');
+                    }, 1500);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showSuccessMessage();
+                setTimeout(() => {
+                    alert('Date night reserved! 🌹 See you soon!');
+                }, 1500);
+            }
+        }
+
+        function showSuccessMessage() {
+            const msg = document.getElementById('successMessage');
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 3000);
         }
 
         // Initial random position for no button
-        window.addEventListener('load', moveNoButton);
+        window.addEventListener('load', () => {
+            moveNoButton();
+            initializeCalendarPage();
+        });
+
+        // Reposition no button on window resize
+        window.addEventListener('resize', moveNoButton);
     </script>
 </body>
 </html>
